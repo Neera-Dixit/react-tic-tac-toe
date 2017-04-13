@@ -9,7 +9,8 @@ export default class Board extends Component {
   }
     
     renderSquare(i){
-        return <Square value={this.props.squares[i]} onClick={(event)=>this.props.handleSquareClick(event,i)}/>
+        let winNumStatus=this.props.winPattern.indexOf(i)>-1?true:false;
+        return (<Square value={this.props.squares[i]} onClick={(event)=>this.props.handleSquareClick(event,i)} winNum={winNumStatus} />);
     }
             
     render(){

@@ -11,14 +11,14 @@ export default class Game extends Component {
           xTurn : true
       };
       this.initial=true;
-      this.winner=null;
+      this.winner={status:false,pattern:[]}
   }
     
     handleSquareClick(event,i){
         let userTurn = this.state.xTurn?'X':'O';
         let squares = [...this.state.squares];
         
-        if(squares[i] === null && !this.winner){
+        if(squares[i] === null && !this.winner.status){
             squares[i]=userTurn;
              this.setState({
                 squares:squares,
@@ -39,6 +39,7 @@ export default class Game extends Component {
             let [a,b,c] = this.prob[i];
             
             if(squares[a] && squares[a] === squares[b] && squares[a] === squares[c]){
+                this.winner.pattern = [...this.prob[i]];
                     return !status;
             }
     
@@ -50,15 +51,15 @@ export default class Game extends Component {
     render(){
         
          if(!this.initial && this.checkWinner(this.state.squares)){
-            this.winner = this.state.xTurn?'O':'X';
+            this.winner.status = this.state.xTurn?'O':'X';
         }
         
         return(
             <div>
-                <Board handleSquareClick={(event,i)=>this.handleSquareClick(event,i)} squares={this.state.squares}/>
+                <Board handleSquareClick={(event,i)=>this.handleSquareClick(event,i)} squares={this.state.squares} winPattern={this.winner.pattern}/>
                 <div className="dispBlock">
                  <div>Next Turn : {this.state.xTurn?'X':'O'}</div>
-                 <div>Winner : {this.winner}</div>
+                 <div>Winner : {this.winner.status}</div>
                 </div>
             </div>
         )
