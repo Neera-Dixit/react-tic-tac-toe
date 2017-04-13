@@ -43,8 +43,6 @@ export default class Game extends Component {
             }
     
         }
-
-        console.log(status);
         return status;
         
     }
