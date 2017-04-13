@@ -8,17 +8,17 @@ export default class Game extends Component {
       super(props);
       this.state = {
           squares : Array(9).fill(null),
-          xTurn : true,
-          winner : ""
+          xTurn : true
       };
       this.initial=true;
+      this.winner=null;
   }
     
     handleSquareClick(event,i){
         let userTurn = this.state.xTurn?'X':'O';
         let squares = [...this.state.squares];
         
-        if(squares[i] === null){
+        if(squares[i] === null && !this.winner){
             squares[i]=userTurn;
              this.setState({
                 squares:squares,
@@ -44,16 +44,15 @@ export default class Game extends Component {
     
         }
 
+        console.log(status);
         return status;
         
     }
             
     render(){
         
-        let winner=null;
-        
          if(!this.initial && this.checkWinner(this.state.squares)){
-            winner = this.state.xTurn?'O':'X';
+            this.winner = this.state.xTurn?'O':'X';
         }
         
         return(
@@ -61,7 +60,7 @@ export default class Game extends Component {
                 <Board handleSquareClick={(event,i)=>this.handleSquareClick(event,i)} squares={this.state.squares}/>
                 <div className="dispBlock">
                  <div>Next Turn : {this.state.xTurn?'X':'O'}</div>
-                 <div>Winner : {winner}</div>
+                 <div>Winner : {this.winner}</div>
                 </div>
             </div>
         )
